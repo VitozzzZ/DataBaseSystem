@@ -76,7 +76,10 @@ WHERE Sname LIKE'_阳%';
 SELECT Cno,Ccredit;
 FROM Course;
 WHERE Cname LIKE'DB\_Design' ESCAPE'\';
-/*2.(2).⑤涉及空值的查询*/
+/*2.(2). ⑤涉及空值的查询*/
+IS NULL,IS NOT NULL
+/*2.(2).⑥多重条件查询*/
+OR AND
 
 
 
