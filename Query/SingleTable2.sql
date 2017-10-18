@@ -27,4 +27,16 @@ SELECT COUNT(Sno);
 FROM SC;
 GROUP BY Cno;
 
-  
+/*查询选修了三门以上课程的学生学号*/
+SELECT Sno;
+FROM SC;
+GROUP BY Sno;
+HAVING COUNT(*)>3;  /*WHERE语句作用与表或视图，HAVING短语作用于GROUP BY语句分出来的组*/
+
+/*查询平均成绩>=90的学生学号和平均成绩*/
+SELECT Sno,AVG(Grade);
+FROM SC;
+GROUP BY Sno;
+HAVING AVG(Grade)>=90;
+
+
