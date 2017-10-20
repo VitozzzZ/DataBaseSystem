@@ -2,7 +2,7 @@
 1.等值与非等值连接查询,自然连接
 2.自身连接
 3.外连接
-4.多表连接
+4.多表连接(3个表以上的连接)
 *****/
 
 
@@ -25,14 +25,17 @@ SELECT Student.Sno,Sname;
 FROM Student,SC;
 WHERE Student.Sno=SC.Sno AND SC.Cno='2' AND SC.Grade>90;
 
-/*自身连接*/
+/*2.自身连接*/
 /*查询每一门课先修课的先修课*/
 /*为Course表取二个别名 FIRST,SECOND*/
 SELECT FIRST.Cno,SECOND.Cpno;
 FROM Course FIRST,Course SECOND;
 WHERE FIRST.Cpno=SECOND.Cno;
 
-WHERE FIRST.Cpno=SECOND.Cno;
+/*3.外连接 p102看书*/
+SELECT Student.Sno,Sname,Ssex,Sage,Sdept,Cno,Grade;
+FROM Student LEFT OUTER JOIN SC ON(Student.Sno=SC.Sno);
+
 
 
 
