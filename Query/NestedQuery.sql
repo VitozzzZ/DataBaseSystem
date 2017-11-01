@@ -82,22 +82,34 @@ WHERE NOT EXISTS
             FROM SC
             WHERE Sno=Student.Sno AND Cno=Course.Cno)
       );
-/*最内部的 select * from sc where cno = course.cno and sno=student.sno是查询出所有已经选择过课程的学生及相应课程，
-select * from course where not exists 则是所有没有被选择的课程，在这个基础上的 select sname from student where  not exists
+/*最内部的 SELECT * FROM SC WHERE Sno=Student.Sno AND Cno=Course.Cno是查询出所有已经选择过课程的学生及相应课程，
+SELECT* FROM Course WHERE NOT EXISTS则是所有没有被选择的课程，在这个基础上的 SELECT Sname FROM Student WHERE NOT EXISTS
 则是选取所有没有没有选择课程的学生，即选择了所有课程的学员名称。*/
       
 
 SELECT Sname 
 FROM Student
 WHERE Sno IN
-     (SELECT Sno
+     (SELECT Sno   /*解法二*/
       FROM SC
       GROUP BY Sno
       HAVING COUNT(*)=(SELECT COUNT(*)
                        FROM Course)
       );
-
-
+      
+/*查询至少选修了学生201215122选修的全部课程的学生号码*/
+/*等价于 不存在这样的课程y，学生201215122选修了y，而学生x没有选*/
+SELECT DISTINCT Sno
+FROM SC SCX
+WHERE NOT EXISTS
+     (SELECT *
+      FROM SC SCY
+      WHERE SCY.Sno='201215122'AND
+           NOT EXISTS
+           (SELECT *
+            FROM SC SCZ
+            WHERE SCZ.Sno=SCX.Sno AND SCZ.Cno=SCY.Cno)
+      );
                      
 
 
