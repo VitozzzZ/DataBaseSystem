@@ -62,4 +62,40 @@ WHERE Sage<(SELECT MAX(Sage) /*解法2*/
 AND Sdept<>'CS';
 
 /*4.带有EXISTS谓词的子查询*/
+/*查询所有选修了1号课程的学生姓名*/
+SELECT Sname
+FROM Student
+WHERE EXISTS
+     (SELECT *
+      FROM SC
+      WHERE Sno=Student.Sno AND Cno='1');
+/*关于EXISTS看懂即可，依次从Student表中取出一个元组放入内层子查询，若WHERE返回为真则取外层的Sname放入结果表*/
+
+/*查询选修了全部课程（没有一门课程不选修）的学生姓名*/
+SELECT Sname
+FROM Student
+WHERE NOT EXISTS
+     (SELECT*
+      FROM Course
+      WHERE NOT EXISTS
+           (SELECT *
+            FROM SC
+            WHERE Sno=Student.Sno AND Cno=Course.Cno)
+      );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
               
