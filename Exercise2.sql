@@ -42,5 +42,13 @@ SELECT customerNo,customerName,quantity*price AS SaleNumber
 FROM Customer,OrderMaster,OrderDetail
 WHERE Customer.customerNo=OrderMaster.customerNo AND OrderMaster.orderNo=OrderDetail.orderNo
       AND MONTH(orderDate)=3
-
+/*9.	查询出职务为“职员”或职务为“科长”的女员工的信息*/
+/*10.	查找销售金额高于4000的所有客户编号*/
+/*11.	选取编号介于C20050001~C20050004的客户编号、客户名称、客户地址*/
+/*12.	找出同一天进入公司服务的员工*/
+/*13.	查找与“陈诗杰”在同一个单位工作的员工姓名、性别、部门和职务*/
+/*14.	查询每种商品的商品编号、商品名称、订货数量和订货单价*/
+/*15.	查询单价高于400元的商品编号、商品名称、订货数量和订货单价*/
+/*16.	查找每个员工的销售记录，要求显示销售员的编号、姓名、性别、商品名称、数量、单价、金额和销售日期，其中性别使用“男”和“女”表示*/
+/*17.	查询客户姓名为“五一商厦”所购货物的客户名称、订单金额、订货日期和电话号码*/
 
