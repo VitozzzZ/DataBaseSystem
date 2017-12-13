@@ -43,9 +43,28 @@ FROM Customer,OrderMaster,OrderDetail
 WHERE Customer.customerNo=OrderMaster.customerNo AND OrderMaster.orderNo=OrderDetail.orderNo
       AND MONTH(orderDate)=3
 /*9.	查询出职务为“职员”或职务为“科长”的女员工的信息*/
+SELECT *
+FROM Employee
+WHERE headShip IN('职员','科长') AND sex='F'
 /*10.	查找销售金额高于4000的所有客户编号*/
+SELECT customerNo
+FROM OrderMaster
+WHERE orderNo IN
+             (SELECT orderNo
+              FROM OrderDetail
+              GROUP BY orderNo
+              HAVING SUM(quantity*price)>4000)
+
 /*11.	选取编号介于C20050001~C20050004的客户编号、客户名称、客户地址*/
 /*12.	找出同一天进入公司服务的员工*/
+SELECT hireDate,employeeName
+FROM Employee
+WHERE hireDate IN(
+         SELECT hireDate
+         FROM Employee
+         GROUP BY hireDate
+         HAVING COUNT(hireDate)>1)
+ORDER BY hireDate     
 /*13.	查找与“陈诗杰”在同一个单位工作的员工姓名、性别、部门和职务*/
 /*14.	查询每种商品的商品编号、商品名称、订货数量和订货单价*/
 /*15.	查询单价高于400元的商品编号、商品名称、订货数量和订货单价*/
