@@ -72,8 +72,33 @@ WHERE department=(SELECT department
 FROM Employee
 WHERE employeeName='陈诗杰')
 /*14.	查询每种商品的商品编号、商品名称、订货数量和订货单价*/
+SELECT *
+FROM (SELECT OrderDetail.productNo,Product.productName,OrderDetail.quantity,OrderDetail.price
+FROM OrderDetail,Product
+WHERE OrderDetail.productNo=Product.productNo) AS A
+ORDER BY productNo
 
 /*15.	查询单价高于400元的商品编号、商品名称、订货数量和订货单价*/
+SELECT *
+FROM (SELECT OrderDetail.productNo,Product.productName,OrderDetail.quantity,OrderDetail.price
+FROM OrderDetail,Product
+WHERE OrderDetail.productNo=Product.productNo) AS A
+WHERE price>400
+ORDER BY productNo
 /*16.	查找每个员工的销售记录，要求显示销售员的编号、姓名、性别、商品名称、数量、单价、金额和销售日期，其中性别使用“男”和“女”表示*/
+SELECT Employee.employeeNo,Employee.employeeName,Employee.sex,Product.productName,OrderDetail.quantity,OrderDetail.price,(OrderDetail.quantity)*(OrderDetail.price) 金额,OrderMaster.orderDate
+FROM OrderMaster,OrderDetail,Employee,Product
+WHERE Employee.employeeNo=OrderMaster.salerNo AND OrderDetail.orderNo=OrderMaster.orderNo AND Product.productNo=OrderDetail.productNo
 /*17.	查询客户姓名为“五一商厦”所购货物的客户名称、订单金额、订货日期和电话号码*/
+SELECT DISTINCT *
+FROM(SELECT Customer.customerName,OrderMaster.orderDate,Customer.telephone,OrderDetail.orderNo
+FROM Customer,OrderMaster,OrderDetail
+WHERE Customer.customerName='五一商厦' AND OrderDetail.orderNo=OrderMaster.orderNo AND Customer.customerNo=OrderMaster.customerNo)AS A,
+(SELECT OrderMaster.orderDate,SUM(OrderDetail.price*OrderDetail.quantity) 金额
+FROM Customer,OrderMaster,OrderDetail
+WHERE Customer.customerName='五一商厦' AND OrderDetail.orderNo=OrderMaster.orderNo AND Customer.customerNo=OrderMaster.customerNo
+GROUP BY OrderMaster.orderDate)AS B
+
+WHERE A.orderDate=B.orderDate
+
 
